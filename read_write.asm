@@ -1,6 +1,6 @@
 section .data
     endl: db 10
-    msg:  db "The message is:", 10
+    msg:  db "The message is: ", 10
 
 section .bss
     buf: resb 24
