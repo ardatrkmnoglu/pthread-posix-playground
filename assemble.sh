@@ -11,7 +11,7 @@ ld $BUILD_DIR/$DST.o -o $BUILD_DIR/$DST
 read -n 1 -p "Keep $DST.o? (y/n) " char
 
 case "$char" in
-    [yY]) exit;;
-    [nN]) rm $BUILD_DIR/$DST.o; exit;;
+    [yY]) echo ""; exit;;
+    [nN]) rm $BUILD_DIR/$DST.o; echo ""; exit;;
     *)    exit;;
 esac
