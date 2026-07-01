@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -lpthread
+GDBFLAGS = -ex "break _start" -ex "layout asm"
 BUILD_DIR ?= build
 
 SRCS := $(wildcard *.c)
@@ -28,19 +29,22 @@ $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 
 
 run: $(BUILD_DIR)/main
-	$(BUILD_DIR)/main
+	$<
 
 strace: $(BUILD_DIR)/main
-	strace $(BUILD_DIR)/main
+	strace $<
 
 dumpexec: $(BUILD_DIR)/main
-	hexdump -C $(BUILD_DIR)/main
+	hexdump -C $<
 
 dumpobj: $(BUILD_DIR)/main.o
-	hexdump -C $(BUILD_DIR)/main.o
+	hexdump -C $<
+
+gdb: $(BUILD_DIR)/main
+	gdb $(GDBFLAGS) $<
 
 helgrind: $(BUILD_DIR)/main
-	valgrind --tool=helgrind $(BUILD_DIR)/main
+	valgrind --tool=helgrind $<
 
 list-builds:
 	ls $(BUILD_DIR)/
