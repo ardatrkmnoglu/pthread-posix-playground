@@ -27,6 +27,12 @@ $(BUILD_DIR)/%.asm: %.c | $(BUILD_DIR)
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+build_%: %.c
+	$(CC) $< -o $(BUILD_DIR)/main
+
+assemble_%: %.asm
+	./assemble.sh $< main
+
 
 run: $(BUILD_DIR)/main
 	$<
@@ -52,4 +58,4 @@ list-builds:
 clean:
 	rm -rf $(BUILD_DIR)/*
 
-.PHONY: all run clean strace dumpobj dumpexec helgrind asm obj list-builds
+.PHONY: all build assemble run clean strace dumpobj dumpexec helgrind asm obj list-builds
